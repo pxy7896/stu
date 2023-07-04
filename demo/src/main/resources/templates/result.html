@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3 th:text="${msg}"></h3>
+	
+	<!-- input info -->
+	<p th:text="${inputInfo}"></p>
+	
+	<!-- students list -->
+	<div>
+		<table class="table .table-striped table-hover table-condensed">
+			<tbody>
+				<tr th:each="item:${resultStudents}">
+					<td th:text="${item.getId()}"></td>
+					<td th:text="${item.getName()}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<!-- courses list -->
+	<div>
+		<table class="table .table-striped table-hover table-condensed">
+			<tbody>
+				<tr th:each="item1:${resultCourses}">
+					<td th:text="${item1.getId()}"></td>
+					<td th:text="${item1.getName()}"></td>
+					<td th:text="${item1.getWeekday()}"></td>
+					<td th:text="${item1.getStart()}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	
+	<a type="button" class="btn btn-default" th:href="@{/}">
+		Back
+	</a>
+</body>
+</html>

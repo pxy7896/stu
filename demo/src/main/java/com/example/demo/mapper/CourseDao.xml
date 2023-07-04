@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CourseDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Course">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="weekday" jdbcType="INTEGER" property="weekday" />
+    <result column="start" jdbcType="INTEGER" property="start" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, weekday, start
+  </sql>
+  <select id="getCurId" resultType="java.lang.Integer">
+    select 
+    max(id)
+    from course
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from course
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Course">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into course (name, weekday, start
+      )
+    values (#{name,jdbcType=VARCHAR}, #{weekday,jdbcType=INTEGER}, #{start,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Course">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="weekday != null">
+        weekday,
+      </if>
+      <if test="start != null">
+        start,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="weekday != null">
+        #{weekday,jdbcType=INTEGER},
+      </if>
+      <if test="start != null">
+        #{start,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Course">
+    update course
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="weekday != null">
+        weekday = #{weekday,jdbcType=INTEGER},
+      </if>
+      <if test="start != null">
+        start = #{start,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Course">
+    update course
+    set name = #{name,jdbcType=VARCHAR},
+      weekday = #{weekday,jdbcType=INTEGER},
+      start = #{start,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
